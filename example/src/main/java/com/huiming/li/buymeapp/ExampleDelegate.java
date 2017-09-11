@@ -7,9 +7,19 @@ import android.widget.Toast;
 
 import com.huiming.li.buy.delegate.LatteDelegate;
 import com.huiming.li.buy.net.RestClient;
+import com.huiming.li.buy.net.RestCreator;
 import com.huiming.li.buy.net.callback.IError;
 import com.huiming.li.buy.net.callback.IFailure;
 import com.huiming.li.buy.net.callback.ISuccess;
+
+import java.util.WeakHashMap;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author huimingli
@@ -26,33 +36,62 @@ public class ExampleDelegate extends LatteDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle saveInstanceState, View rootView) {
-testRestClient();
+        testRx();
     }
 
-    private void testRestClient(){
+    private void testRestClient() {
         RestClient.builder()
-                .url("http://news.baidu.com")
+                .url("http://127.0.0.1/index")
                 .loader(getContext())
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-                        Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
 
                     }
                 })
                 .failure(new IFailure() {
                     @Override
                     public void onFailure() {
-                        Toast.makeText(getContext(),"fail",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "fail", Toast.LENGTH_LONG).show();
                     }
                 })
                 .error(new IError() {
                     @Override
                     public void onError(int code, String msg) {
-                        Toast.makeText(getContext(),msg,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
                     }
                 })
                 .build()
-        .get();
+                .get();
+    }
+
+    private void testRx() {
+        final String url = "http://127.0.0.1/index";
+        final WeakHashMap<String, Object> params = new WeakHashMap<>();
+        final Observable<String> observable = RestCreator.getRxRestService().get(url, params);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull String s) {
+                        Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }
