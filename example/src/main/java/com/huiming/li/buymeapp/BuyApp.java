@@ -21,8 +21,10 @@ public class BuyApp extends Application {
     public void onCreate() {
         super.onCreate();
         Latte.init(this)
-                .withApiHost("http://127.0.0.1")
-                .withInterceptor(new DebugInterceptor("index",R.raw.test))
+                .withApiHost("http://106.15.178.177/RestServer/api/")
+//                .withInterceptor(new DebugInterceptor("index",R.raw.test))
+                .withWechatAppId("")
+                .withWechatAppSecret("")
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEcModule())
                 .configure();

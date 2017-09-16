@@ -5,9 +5,12 @@ import android.support.v7.app.ActionBar;
 import android.widget.Toast;
 
 import com.huiming.li.buy.activities.ProxyActivity;
+import com.huiming.li.buy.app.ConfigKeys;
+import com.huiming.li.buy.app.Latte;
 import com.huiming.li.buy.delegate.LatteDelegate;
 import com.huiming.li.buy.ec.launcher.LauncherDelegate;
 import com.huiming.li.buy.ec.launcher.LauncherScrollDelegate;
+import com.huiming.li.buy.ec.main.EcBottomDelegate;
 import com.huiming.li.buy.ec.sign.ISignListener;
 import com.huiming.li.buy.ec.sign.SignUpDelegate;
 
@@ -21,11 +24,12 @@ public class ExampleActivity extends ProxyActivity implements ISignListener{
         if (actionBar != null){
             actionBar.hide();
         }
+        Latte.getConfigurator().withActivity(this);
     }
 
     @Override
     public LatteDelegate setRootDelegate() {
-        return new SignUpDelegate();
+        return new EcBottomDelegate();
     }
 
     @Override

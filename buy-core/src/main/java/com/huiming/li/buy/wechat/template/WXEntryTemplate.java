@@ -1,7 +1,7 @@
 package com.huiming.li.buy.wechat.template;
 
-import com.huiming.li.buy.activities.ProxyActivity;
-import com.huiming.li.buy.delegate.LatteDelegate;
+import com.huiming.li.buy.wechat.BaseWXEntryActivity;
+import com.huiming.li.buy.wechat.LatteWeChat;
 
 /**
  * @author huimingli
@@ -9,9 +9,18 @@ import com.huiming.li.buy.delegate.LatteDelegate;
  * @description
  */
 
-public class WXEntryTemplate extends ProxyActivity {
+public class WXEntryTemplate extends BaseWXEntryActivity {
+
     @Override
-    public LatteDelegate setRootDelegate() {
-        return null;
+    protected void onSignInSuccess(String userInfo) {
+        LatteWeChat.getInstance().getmSignInCallback().onSignInSuccess(userInfo);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        finish();
+        overridePendingTransition(0,0);
     }
 }

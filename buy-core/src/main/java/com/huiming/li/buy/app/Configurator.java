@@ -1,5 +1,7 @@
 package com.huiming.li.buy.app;
 
+import android.app.Activity;
+
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 
@@ -57,8 +59,24 @@ public class Configurator {
         LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR.name(),INTERCEPTORS);
         return this;
     }
+
     public final Configurator withIcon(IconFontDescriptor descriptor){
         ICONS.add(descriptor);
+        return this;
+    }
+
+    public final Configurator withWechatAppId(String appid){
+        LATTE_CONFIGS.put(ConfigKeys.WE_CHAT_APP_ID.name(),appid);
+        return this;
+    }
+
+    public final Configurator withWechatAppSecret(String secret){
+        LATTE_CONFIGS.put(ConfigKeys.WE_CHAT_APP_SECRET.name(),secret);
+        return this;
+    }
+
+    public final Configurator withActivity(Activity activity){
+        LATTE_CONFIGS.put(ConfigKeys.ACTIVITY.name(),activity);
         return this;
     }
 

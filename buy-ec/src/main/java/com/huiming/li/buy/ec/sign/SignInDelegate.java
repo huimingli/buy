@@ -9,6 +9,8 @@ import android.view.View;
 import com.huiming.li.buy.delegate.BaseDelegate;
 import com.huiming.li.buy.ec.R;
 import com.huiming.li.buy.ec.R2;
+import com.huiming.li.buy.wechat.LatteWeChat;
+import com.huiming.li.buy.wechat.callback.IWechatSignInCallback;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,6 +37,12 @@ public class SignInDelegate extends BaseDelegate {
     }
     @OnClick(R2.id.icon_signin_in_wechat)
     void onClickWechat(){
+        LatteWeChat.getInstance().onSignInSuccess(new IWechatSignInCallback() {
+            @Override
+            public void onSignInSuccess(String userInfo) {
+
+            }
+        }).signIn();
 
     }
 
